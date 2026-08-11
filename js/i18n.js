@@ -5,7 +5,9 @@
  */
 (function () {
   var STORAGE_KEY = "dfv-lang";
-  var pageLang = (document.documentElement.getAttribute("lang") || "en").slice(0, 2).toLowerCase();
+  var htmlEl = document.documentElement;
+  var pageLang = (htmlEl.getAttribute("lang") || "en").slice(0, 2).toLowerCase();
+  var redirectOff = htmlEl.getAttribute("data-i18n-redirect") === "off";
 
   function browserPrefersItalian() {
     var list =
@@ -39,10 +41,14 @@
   }
 
   function isEnglishPage() {
-    // Works for http(s) and file://
     var path = window.location.pathname || "";
     var href = window.location.href || "";
     return /(^|\/)en(\/|$)/i.test(path) || /\/en\//i.test(href);
+  }
+
+  function isSeoLanding() {
+    var path = (window.location.pathname || "") + (window.location.href || "");
+    return /fotografo-/i.test(path);
   }
 
   function pageKind() {
@@ -54,15 +60,24 @@
     return "home";
   }
 
-  /** Relative destination for the other (or preferred) language. */
   function relativeDest(targetLang, hash) {
     var file = pageKind() === "gadgets" ? "gadgets.html" : "index.html";
     var onEn = isEnglishPage();
     var path;
     if (targetLang === "en") {
-      path = onEn ? file : "en/" + file;
+      if (isSeoLanding()) {
+        path = "../en/" + file;
+      } else {
+        path = onEn ? file : "en/" + file;
+      }
     } else {
-      path = onEn ? "../" + file : file;
+      if (onEn) {
+        path = "../" + file;
+      } else if (isSeoLanding()) {
+        path = file === "index.html" ? "../index.html" : "../" + file;
+      } else {
+        path = file;
+      }
     }
     return path + (hash || "");
   }
@@ -76,7 +91,7 @@
   }
 
   var preferred = getPreferredLang();
-  if (preferred !== pageLang) {
+  if (!redirectOff && preferred !== pageLang) {
     var hash = window.location.hash || "";
     var dest = relativeDest(preferred, hash);
     try {
