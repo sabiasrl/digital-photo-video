@@ -168,6 +168,119 @@ a:focus-visible {
   text-overflow: ellipsis;
 }
 
+/* Language switcher (flags) */
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0 0;
+}
+
+.lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  min-height: auto;
+}
+
+.site-nav-list > .lang-switch {
+  border-bottom: none;
+}
+
+.site-nav-list > .lang-switch > .lang-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: auto;
+  padding: 0.35rem 0.5rem;
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.site-nav-list > .lang-switch > .lang-btn:hover,
+.site-nav-list > .lang-switch > .lang-btn:focus-visible {
+  color: var(--text);
+  border-color: var(--link);
+  text-decoration: none;
+}
+
+.site-nav-list > .lang-switch > .lang-btn.is-active {
+  color: var(--text);
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+}
+
+.lang-btn:hover,
+.lang-btn:focus-visible {
+  color: var(--text);
+  border-color: var(--link);
+  text-decoration: none;
+}
+
+.lang-btn.is-active {
+  color: var(--text);
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+}
+
+.lang-flag {
+  display: block;
+  width: 22px;
+  height: 15px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.lang-code {
+  font-family: var(--font-display);
+}
+
+@media (min-width: 900px) {
+  .lang-switch {
+    padding: 0;
+    margin-left: 0.5rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    padding-left: 0.85rem;
+  }
+
+  .site-nav-list > .lang-switch {
+    border-bottom: none;
+  }
+}
+
+@media (max-width: 899px) {
+  .lang-switch {
+    justify-content: flex-start;
+    padding: 1rem 0 0.35rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 0.35rem;
+  }
+
+  .lang-btn {
+    min-height: 2.75rem;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.85rem;
+  }
+}
+
 .nav-menu-state {
   position: absolute;
   width: 1px;
